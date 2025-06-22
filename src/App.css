@@ -1,4 +1,8 @@
+body, #root, .card, .read-the-docs {
+  color: #000;
+}
 #root {
+  background: #fff;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;

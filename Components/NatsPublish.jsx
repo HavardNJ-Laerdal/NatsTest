@@ -1,19 +1,31 @@
 import { Autocomplete, Stack, TextField } from '@mui/material';
-import { StringCodec } from 'nats.ws';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export function NatsPublish(props) {
-  const [subscriptions, setSubscriptions] = useState(['com.laerdal.simulation.vitalstate/v1']);
+  const [subscriptions, setSubscriptions] = useState(['com.laerdal.simulation.vitalstate.request/v1']);
   const [publishAddress, setPublishAddress] = useState();
-  const [pubMsg, setPubMsg] = useState("{\"hello\": \"world\"}");
-  const [sc] = useState(StringCodec());
+  const [pubMsg, setPubMsg] = useState("");
+
+  function isValidJSON(str) {
+  try {
+    const parsed = JSON.parse(str);
+    return typeof parsed === "object" && parsed !== null;
+  } catch (e) {
+    toast.error(`Invalid json, ${e.message}`);
+    return false;
+  }
+}
 
   function sendMsg(payload) {
-    console.log(`Publishing to ${publishAddress}: ${payload}`);
-    props.nats?.publish(publishAddress, sc.encode(JSON.stringify(payload)));
-    if(!subscriptions.includes(publishAddress)) {
-        setSubscriptions([...subscriptions, publishAddress]);
+    if(isValidJSON(payload)){
+      console.log(`Publishing to ${publishAddress}: ${payload}`);
+      
+      props.nats?.publish(publishAddress, payload);
+      if(!subscriptions.includes(publishAddress)) {
+          setSubscriptions([...subscriptions, publishAddress]);
+      }
     }
   }
 

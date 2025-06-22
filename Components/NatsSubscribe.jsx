@@ -10,7 +10,7 @@ export function NatsSubscribe(props) {
 
     const [sc] = useState(StringCodec());
 
-    const [messages, setMessages] = useState(["{ \"hello\": {\"world\": \"test\"} }"]);
+    const [messages, setMessages] = useState(["{}"]);
 
     const [subscriptionAddress, setSubscriptionAddress] = useState();
     const [subscriptions, setSubscriptions] = useState(['com.laerdal.simulation.vitalstate/v1']);
@@ -41,7 +41,6 @@ export function NatsSubscribe(props) {
     }
 
     const renderTree = (id, item) => {
-        console.log("rendering tree", id, item);
         const label = typeof item !== 'object' ? `${id}: ${item}` : id;
         return (
           <TreeItem key={id} itemId={id} label={label}>
@@ -109,7 +108,7 @@ export function NatsSubscribe(props) {
                     paddingLeft: '8px', // Optional: controls padding for all TreeItems
                 },
             }}>
-            {renderTree("root", JSON.parse(messages[0]) || {})}
+            {renderTree("root", messages[0] || {})}
           </SimpleTreeView>
           <TextField
             id="standard-multiline-flexible"
@@ -118,7 +117,7 @@ export function NatsSubscribe(props) {
             sx={{ minHeight: 200, flexGrow: 1 }}
             multiline
             rows={20}
-            value={messages[0] && JSON.stringify(JSON.parse(messages[0]), null, 2)}
+            value={messages[0] && JSON.stringify(messages[0], null, 2)}
             slotProps={{
                         input: {
                             readOnly: true,

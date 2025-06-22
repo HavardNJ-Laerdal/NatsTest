@@ -2,6 +2,7 @@ import './App.css';
 
 import { Stack } from '@mui/material';
 import { React, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 
 import { NatsConnect } from '../Components/NatsConnect';
 import { NatsPublish } from '../Components/NatsPublish';
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <Stack  spacing={2} sx={{ flexGrow: 1, width: '100vh'}}>
+      <Toaster />
       <NatsConnect onConnected={setNats} />
       <NatsSubscribe nats={nats} />
       <NatsPublish nats={nats} />
