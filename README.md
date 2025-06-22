@@ -1,4 +1,4 @@
-Minimal Nats test for connecting to a nats server, listening to a subscription and publishing. Based on react and mui.
+Minimal Nats test for connecting to a nats server, listening to a subscription and publishing. Based on react and mui. Requires nodejs (duh).
 
 To run locally:
 npm install
